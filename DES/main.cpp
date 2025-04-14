@@ -1,30 +1,39 @@
-#include <iostream>
-#include <fstream>
-#include "des.h"
-#include "io_utils.h"
+#include <iostream>     
+#include <fstream>      
+#include "des.h"        
+#include "io_utils.h"   
 
+// Hàm main - điểm bắt đầu của chương trình
 int main() {
     std::cout << "Program started!" << std::endl;
 
+    // Các file sẽ sử dụng
     std::string inputFilename = "input.txt";
     std::string encryptedFilename = "encrypted.txt";
     std::string decryptedFilename = "decrypted.txt";
 
-    // Sửa tên hàm cho đúng
-    std::string inputText = read_file(inputFilename); // sửa từ readFile thành read_file
+    // Đọc nội dung văn bản từ file input.txt
+    std::string inputText = read_file(inputFilename); 
     if (inputText.empty()) {
         std::cout << "Failed to read input.txt or it's empty!" << std::endl;
-        return 1;
+        return 1; 
     }
 
-    std::string key = "secret_k"; // 8 bytes
+    // Khóa dùng cho thuật toán DES (phải đúng 8 byte)
+    std::string key = "secret_k"; // 8 ký tự = 8 byte
 
-    std::string encryptedText = des_encrypt(inputText, key); // sửa từ desEncrypt thành des_encrypt
-    write_file(encryptedFilename, encryptedText); // sửa từ writeFile thành write_file
+    // Mã hóa văn bản bằng DES
+    std::string encryptedText = des_encrypt(inputText, key); 
 
-    std::string decryptedText = des_decrypt(encryptedText, key); // sửa từ desDecrypt thành des_decrypt
-    write_file(decryptedFilename, decryptedText); // sửa từ writeFile thành write_file
+    // Ghi kết quả mã hóa vào file encrypted.txt
+    write_file(encryptedFilename, encryptedText); 
+
+    // Giải mã văn bản đã mã hóa
+    std::string decryptedText = des_decrypt(encryptedText, key);
+
+    // Ghi kết quả giải mã vào file decrypted.txt
+    write_file(decryptedFilename, decryptedText); 
 
     std::cout << "Done! Check encrypted.txt and decrypted.txt" << std::endl;
-    return 0;
+    return 0; 
 }
